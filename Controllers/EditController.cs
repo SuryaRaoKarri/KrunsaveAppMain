@@ -20,5 +20,11 @@ namespace Krunsave.Controllers
             store = await _editrepo.Editstore(store);
             return Ok(store);
         }
+
+        [HttpPost("editavailablefood")]
+        public async Task<IActionResult> Editavailablefood(Availablefood availablefood){
+            availablefood = await _editrepo.Editavailablefood(availablefood);
+            return Ok(availablefood);
+        }
     }
 }

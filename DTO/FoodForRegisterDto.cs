@@ -12,6 +12,7 @@ namespace Krunsave.DTO
         public string cookedDate {get; set;}
         public string expiryDate {get; set;}
         public string description {get; set;}
+        public bool status {get; set;}
         public int? foodTypeID {get; set;}
         public int storeID {get; set;}
     }
