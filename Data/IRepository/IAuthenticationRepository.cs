@@ -10,8 +10,8 @@ namespace Krunsave.Data.IRepository
     {
         
 
-        Task<bool> RegisterUser(UserForRegisterDto userForRegisterDto); 
-
+        Task<bool> RegisterUserValidate(UserForRegisterDto userForRegisterDto); 
+        Task<bool> Register(UserCheckOTP userCheckOTP);
         Task<User> Login(UserForLoginDto userForLoginDto);
 
         Task<bool> UserExists(string username);

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Krunsave.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190323151205_StatusColumnAddToAvailablefood")]
-    partial class StatusColumnAddToAvailablefood
+    [Migration("20190324075655_TableCount10")]
+    partial class TableCount10
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -154,21 +154,56 @@ namespace Krunsave.Migrations
                     b.Property<int>("userID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("email");
+                    b.Property<string>("email")
+                        .IsRequired();
 
-                    b.Property<byte[]>("passwordHash");
+                    b.Property<byte[]>("passwordHash")
+                        .IsRequired();
 
-                    b.Property<byte[]>("passwordSalt");
+                    b.Property<byte[]>("passwordSalt")
+                        .IsRequired();
 
                     b.Property<string>("phoneNumber");
 
                     b.Property<int>("roleID");
+
+                    b.Property<string>("userName");
 
                     b.HasKey("userID");
 
                     b.HasIndex("roleID");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Krunsave.Model.Userregistervalidate", b =>
+                {
+                    b.Property<int>("usertempID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("email")
+                        .IsRequired();
+
+                    b.Property<int>("otp");
+
+                    b.Property<byte[]>("passwordHash")
+                        .IsRequired();
+
+                    b.Property<byte[]>("passwordSalt")
+                        .IsRequired();
+
+                    b.Property<string>("phoneNumber");
+
+                    b.Property<int>("roleID");
+
+                    b.Property<string>("userName")
+                        .IsRequired();
+
+                    b.HasKey("usertempID");
+
+                    b.HasIndex("roleID");
+
+                    b.ToTable("Userregistervalidates");
                 });
 
             modelBuilder.Entity("Krunsave.Model.Userview", b =>
@@ -217,6 +252,14 @@ namespace Krunsave.Migrations
                 {
                     b.HasOne("Krunsave.Model.Role", "role")
                         .WithMany("user")
+                        .HasForeignKey("roleID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Krunsave.Model.Userregistervalidate", b =>
+                {
+                    b.HasOne("Krunsave.Model.Role", "role")
+                        .WithMany()
                         .HasForeignKey("roleID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

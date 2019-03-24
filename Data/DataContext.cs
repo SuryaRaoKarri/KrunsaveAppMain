@@ -16,6 +16,7 @@ namespace Krunsave.Data
         public DbSet<Store> Stores {get; set;}
         public  DbSet<Storetype> Storetypes { get; internal set; }
         public DbSet<User> Users {get; set;}
+        public DbSet<Userregistervalidate> Userregistervalidates{get; set;}
         public DbSet<Userview> Userviews{get; set;}
         
         //public object Store { get; internal set; }

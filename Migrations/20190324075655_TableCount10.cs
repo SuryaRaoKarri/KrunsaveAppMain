@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Krunsave.Migrations
 {
-    public partial class InitialTables2 : Migration
+    public partial class TableCount10 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -72,14 +72,40 @@ namespace Krunsave.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Userregistervalidates",
+                columns: table => new
+                {
+                    usertempID = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    userName = table.Column<string>(nullable: false),
+                    email = table.Column<string>(nullable: false),
+                    passwordHash = table.Column<byte[]>(nullable: false),
+                    passwordSalt = table.Column<byte[]>(nullable: false),
+                    phoneNumber = table.Column<string>(nullable: true),
+                    otp = table.Column<int>(nullable: false),
+                    roleID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Userregistervalidates", x => x.usertempID);
+                    table.ForeignKey(
+                        name: "FK_Userregistervalidates_Roles_roleID",
+                        column: x => x.roleID,
+                        principalTable: "Roles",
+                        principalColumn: "roleID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
                     userID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    email = table.Column<string>(nullable: true),
-                    passwordHash = table.Column<byte[]>(nullable: true),
-                    passwordSalt = table.Column<byte[]>(nullable: true),
+                    userName = table.Column<string>(nullable: true),
+                    email = table.Column<string>(nullable: false),
+                    passwordHash = table.Column<byte[]>(nullable: false),
+                    passwordSalt = table.Column<byte[]>(nullable: false),
                     phoneNumber = table.Column<string>(nullable: true),
                     roleID = table.Column<int>(nullable: false)
                 },
@@ -139,6 +165,7 @@ namespace Krunsave.Migrations
                     cookedDate = table.Column<string>(nullable: true),
                     expiryDate = table.Column<string>(nullable: true),
                     description = table.Column<string>(nullable: true),
+                    status = table.Column<bool>(nullable: false),
                     foodTypeID = table.Column<int>(nullable: true),
                     storeID = table.Column<int>(nullable: false)
                 },
@@ -199,6 +226,11 @@ namespace Krunsave.Migrations
                 column: "userID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Userregistervalidates_roleID",
+                table: "Userregistervalidates",
+                column: "roleID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_roleID",
                 table: "Users",
                 column: "roleID");
@@ -232,6 +264,9 @@ namespace Krunsave.Migrations
 
             migrationBuilder.DropTable(
                 name: "Storetypes");
+
+            migrationBuilder.DropTable(
+                name: "Userregistervalidates");
 
             migrationBuilder.DropTable(
                 name: "Userviews");

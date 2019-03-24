@@ -2,12 +2,14 @@ using System.Threading.Tasks;
 using Krunsave.Data.IRepository;
 using Krunsave.DTO;
 using Krunsave.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Krunsave.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles="admin, manager")]
     public class EditController : ControllerBase
     {
         private readonly IEditRepository _editrepo;

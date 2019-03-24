@@ -24,12 +24,18 @@ namespace Krunsave.Controllers
             _repo = repo;
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(UserForRegisterDto userForRegister)
+        [HttpPost("registervalidate")]
+        public async Task<IActionResult> Registervalidate(UserForRegisterDto userForRegister)
         {
             userForRegister.email = userForRegister.email.ToLower();
             if(await _repo.UserExists(userForRegister.email)) return BadRequest("Username Already Exists");
-            if(!await _repo.RegisterUser(userForRegister)) return BadRequest("Something Went Wrong");
+            if(!await _repo.RegisterUserValidate(userForRegister)) return BadRequest("Something Went Wrong");
+            return StatusCode(201);
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(UserCheckOTP userCheckOTP){
+            if(! await _repo.Register(userCheckOTP)) return BadRequest("Something Went Wrong");
             return StatusCode(201);
         }
 
