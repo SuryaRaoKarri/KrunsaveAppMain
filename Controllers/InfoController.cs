@@ -26,7 +26,7 @@ namespace Krunsave.Controllers
         public async Task<IActionResult> Get(string lat, string lng)
         {
             var distance = await _storeinforepo.GetDistance(lat, lng);
-            // var rest = User.Claims.First(i => i.Type == "userID").Value;
+            //var rest = User.Claims.First(i => i.Type == "userID").Value;
             var identity = (ClaimsIdentity)User.Identity;
             //return Ok(identity.Name);
             var roles = identity.Claims.Where(c => c.Type == "userID").Select(c => c.Value);

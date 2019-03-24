@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Krunsave.Data.IRepository;
 using Krunsave.DTO;
 using Krunsave.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace Krunsave.Data.Repository
 {
@@ -51,6 +52,13 @@ namespace Krunsave.Data.Repository
             store.userID = storedto.userID;
             await _context.Stores.AddAsync(store);
             await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> CheckstoreID(int userID, int storeID)
+        {
+            var result = await _context.Stores.FirstOrDefaultAsync(s => s.userID == userID && s.storeID == storeID);
+            if(result == null) return false;
             return true;
         }
     }
